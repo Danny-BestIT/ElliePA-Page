@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellie PA Pricing Plans</title>
+    <style>
+        :root {
+            --primary-color: #3674B5;
+            --secondary-color: #EBF2FA;
+            --accent-color: #5A92C9;
+            --light-accent: #D4E5F7;
+            --text-color: #333333;
+            --light-gray: #F8F9FA;
+            --dark-gray: #2C3E50;
+            --success-color: #28a745;
+            --popular-color: #FF5B8D;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: ltr;
+        }
+        
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .pricing-header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .pricing-header p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--dark-gray);
+        }
+        
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .pricing-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: visible;
+            width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: var(--secondary-color);
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--light-accent);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            transform: rotate(45deg);
+            background-color: var(--popular-color);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .plan-name {
+            color: var(--primary-color);
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .price {
+            font-size: 2.8em;
+            font-weight: bold;
+            margin: 15px 0 5px;
+            color: var(--text-color);
+        }
+        
+        .currency {
+            font-size: 0.5em;
+            vertical-align: super;
+            font-weight: normal;
+        }
+        
+        .period {
+            display: block;
+            font-size: 0.35em;
+            color: #666;
+            font-weight: normal;
+        }
+        
+        .annual-price {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+        
+        .hebrew-desc {
+            background-color: var(--light-accent);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            direction: ltr;
+            text-align: left;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .features-list {
+            list-style-type: none;
+            margin-bottom: auto;
+            padding-bottom: 20px;
+        }
+        
+        .features-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 28px;
+            font-size: 0.95em;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .card-footer {
+            padding: 0 25px 25px;
+        }
+        
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 15px;
+            text-align: center;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2a5d8f;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--light-accent);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .note {
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .enterprise-section {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 40px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .enterprise-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .enterprise-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .enterprise-feature {
+            width: 200px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .enterprise-icon {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .enterprise-feature h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        @media (max-width: 1200px) {
+            .pricing-card {
+                width: 250px;
+                min-height: 600px;
+                height: auto;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .pricing-grid {
+                flex-direction: column;
+                align-items: center;
+                max-width: 500px;
+                margin: 0 auto 50px;
+            }
+            
+            .pricing-card {
+                width: 100%;
+                max-width: 450px;
+                min-height: auto;
+                margin-bottom: 20px;
+            }
+            
+            .enterprise-grid {
+                gap: 15px;
+            }
+            
+            .enterprise-feature {
+                width: 150px;
+            }
+        }
+        
+        /* Additional responsive improvements */
+        @media screen and (max-width: 768px) {
+            .enterprise-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            
+            .enterprise-feature {
+                width: 100%;
+            }
+            
+            .card-body {
+                min-height: auto;
+            }
+            
+            .popular-tag {
+                font-size: 0.7em;
+                padding: 3px 30px;
+                right: -25px;
+                top: 10px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .pricing-header h1 {
+                font-size: 2em;
+            }
+            
+            .pricing-header p {
+                font-size: 1em;
+            }
+            
+            .enterprise-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .price {
+                font-size: 2.4em;
+            }
+            
+            .popular-tag {
+                padding: 2px 25px;
+                right: -20px;
+                top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-container">
+        <div class="pricing-header">
+            <h1>Ellie PA Pricing Plans</h1>
+            <p>Choose the plan that works best for you or your organization</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <div class="plan-name">Free</div>
+                    <div class="price">
+                        <span class="currency">$</span>0
+                        <span class="period">forever</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="hebrew-desc" style="direction: ltr; text-align: left;">
+                        The Free plan allows you to experience Ellie PA without commitment. Connect up to 3 WhatsApp groups and access summaries directly in your groups or through our dedicated interface. You'll have access to 3 month of summaries in our dedicated interface, allowing you to evaluate the core benefits before upgrading to more powerful plans.
+                    </div>
+                    <ul class="features-list">
+                        <li>View summaries in group or dedicated interface</li>
+                        <li>Connect up to 3 WhatsApp groups</li>
+                        <li>Keep summaries for 3 months</li>
+                        <li>Basic summary format</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://bestit.fillout.com/t/ftPjHoCSbKus" class="btn btn-outline" target="_blank">Get Started</a>
+                    <p class="note">No credit card required</p>
+                </div>
+            </div>
+            
+            <!-- Basic Plan -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <div class="plan-name">Basic</div>
+                    <div class="price">
+                        <span class="currency">$</span>9
+                        <span class="period">per month</span>
+                    </div>
+                    <div class="annual-price">Billed annually at $108</div>
+                </div>
+                <div class="card-body">
+                    <div class="hebrew-desc" style="direction: ltr; text-align: left;">
+                        The Basic plan is designed for individual users looking to enhance their productivity. It expands on the Free plan capabilities by providing access to a full year of message history and basic analytics that help you get more value from your conversations.
+                    </div>
+                    <ul class="features-list">
+                        <li>All features of the Free plan</li>
+                        <li>Advanced summary format</li>
+                        <li>Keep summaries for 1 year</li>
+                        <li>Connect up to 3 WhatsApp groups</li>
+                        <li>Basic analytics</li>
+                        <li>Email support</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://bestit.fillout.com/t/ftPjHoCSbKus" class="btn btn-primary" target="_blank">Contact Us</a>
+                </div>
+            </div>
+            
+            <!-- Advanced Plan -->
+            <div class="pricing-card">
+                <div class="popular-tag">POPULAR</div>
+                <div class="card-header">
+                    <div class="plan-name">Advanced</div>
+                    <div class="price">
+                        <span class="currency">$</span>19
+                        <span class="period">per month</span>
+                    </div>
+                    <div class="annual-price">Billed annually at $228</div>
+                </div>
+                <div class="card-body">
+                    <div class="hebrew-desc" style="direction: ltr; text-align: left;">
+                        The Advanced plan is for users who want to leverage the full potential of Ellie PA. It includes the powerful ability to ask questions about conversation content, access to 3 years or 5GB of message history (whichever comes first), and task management based on conversation content. The plan also offers customizable summary styles and priority support to make your information experience more efficient and effective.
+                    </div>
+                    <ul class="features-list">
+                        <li>All features of the Basic plan</li>
+                        <li>Connect up to 5 WhatsApp groups</li>
+                        <li>Access to 3 years / 5GB of message history</li>
+                        <li>Ask questions about conversation content</li>
+                        <li>Custom summary style personalization</li>
+                        <li>Priority support</li>
+                        <li>Advanced analytics dashboard</li>
+                        <li>Additional groups available (up to 20 groups)</li>
+                        <li>Task creation and management (coming soon)</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://bestit.fillout.com/t/ftPjHoCSbKus" class="btn btn-primary" target="_blank">Contact Us</a>
+                </div>
+            </div>
+            
+            <!-- Enterprise Plan -->
+            <div class="pricing-card">
+                <div class="card-header">
+                    <div class="plan-name">Enterprise</div>
+                    <div style="font-size: 0.9em; color: #666; margin-bottom: 10px;">(coming soon)</div>
+                    <div class="price">
+                        <span class="currency">$</span>499
+                        <span class="period">per month</span>
+                    </div>
+                    <div class="annual-price">Billed annually at $4,990</div>
+                </div>
+                <div class="card-body">
+                    <div class="hebrew-desc" style="direction: ltr; text-align: left;">
+                        The Enterprise plan provides a comprehensive solution for teams and organizations that need professional-level communication management. It includes unlimited message history, custom AI bot creation, white-labeling options, and dedicated support. Pricing and features can be tailored to the size of your organization and your specific needs.
+                    </div>
+                    <ul class="features-list">
+                        <li>All features of the Advanced plan</li>
+                        <li>50 WhatsApp groups</li>
+                        <li>Unlimited message history</li>
+                        <li>Admin dashboard</li>
+                        <li>White-labeling capabilities</li>
+                        <li>Custom AI bot creation</li>
+                        <li>Priority support</li>
+                        <li>Dedicated account manager</li>
+                        <li>Volume discounts available</li>
+                        <li>Task creation and management (coming soon)</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="https://bestit.fillout.com/t/ftPjHoCSbKus" class="btn btn-primary" target="_blank">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="enterprise-section">
+            <h2>Need a custom solution for your organization?</h2>
+            <p>For larger organizations or specific industry needs, we offer tailored solutions.</p>
+            
+            <div class="enterprise-grid">
+                <div class="enterprise-feature">
+                    <div class="enterprise-icon">🔒</div>
+                    <h3>Advanced Security</h3>
+                    <p>Enhanced security features for enterprise compliance</p>
+                </div>
+                
+                <div class="enterprise-feature">
+                    <div class="enterprise-icon">🔄</div>
+                    <h3>Custom Integrations</h3>
+                    <p>Connect with your existing tools and workflows</p>
+                </div>
+                
+                <div class="enterprise-feature">
+                    <div class="enterprise-icon">👥</div>
+                    <h3>Team Management</h3>
+                    <p>Advanced user roles and permissions</p>
+                </div>
+                
+                <div class="enterprise-feature">
+                    <div class="enterprise-icon">📊</div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Deeper insights into your communications</p>
+                </div>
+            </div>
+            
+            <a href="https://bestit.fillout.com/t/ftPjHoCSbKus" class="btn btn-success" style="max-width: 300px; margin: 0 auto;" target="_blank">Schedule a Consultation</a>
+        </div>
+    </div>
+</body>
+</html>
